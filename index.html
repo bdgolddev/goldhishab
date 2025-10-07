@@ -1,297 +1,236 @@
 <!DOCTYPE html>
 <html lang="bn">
-  <head>
-    <meta charset="UTF-8" />
-    <title>Gold Khat Calculator</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-  </head>
-  <body
-    class="bg-gradient-to-br from-yellow-50 to-amber-100 min-h-screen flex items-center justify-center p-4"
-  >
-  
-    <div
-      class="bg-white rounded-2xl shadow-xl w-full max-w-md p-6 transform transition-all duration-500 hover:scale-[1.02]"
-    >
+
+<head>
+  <meta charset="UTF-8" />
+  <title>Gold Khat Calculator</title>
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="">
+  <div class="bg-gradient-to-br from-yellow-50 to-amber-100 min-h-screen flex flex-col items-center justify-center p-4 gap-4">
+
+    <!-- Calculator Container -->
+    <div class="bg-white rounded-2xl shadow-xl w-full max-w-md p-6 transform transition-all duration-500 hover:scale-[1.02]">
       <div class="flex justify-between items-center mb-4">
-        
-        <h2
-          id="title"
-          class="text-2xl font-bold text-yellow-700 flex items-center gap-2"
-        >
-          💰 সোনার খাত ক্যালকুলেটর
-        </h2>
-        <button
-          id="langToggle"
-          class="text-sm bg-amber-200 hover:bg-amber-300 text-yellow-800 font-semibold px-3 py-1 rounded"
-        >
-          English
-        </button>
+        <h2 id="title" class="text-2xl font-bold text-yellow-700 flex items-center gap-2">💰 Gold Khat Calculator</h2>
+        <button id="langToggle" class="text-sm bg-amber-200 hover:bg-amber-300 text-yellow-800 font-semibold px-3 py-1 rounded">বাংলা</button>
       </div>
 
       <!-- Inputs -->
-      <label id="karatLabel" class="block text-gray-700 font-medium mb-1"
-        >সোনার ক্যারেট (যেমন ২২)</label
-      >
-      <input
-        type="number"
-        id="karat"
-        value="22"
-        autofocus
-        class="w-full border border-gray-300 rounded-lg p-2 mb-4 focus:ring-2 focus:ring-yellow-400 outline-none transition-all"
-      />
+      <label id="karatLabel" class="block text-gray-700 font-medium mb-1">Gold Karat (e.g. 22)</label>
+      <input type="number" id="karat" value="22" autofocus class="w-full border border-gray-300 rounded-lg p-2 mb-4 focus:ring-2 focus:ring-yellow-400 outline-none transition-all" />
 
-      <label id="weightLabel" class="block text-gray-700 font-medium mb-1"
-        >মোট ওজন (গ্রামে)</label
-      >
-      <input
-        type="number"
-        id="weightGram"
-        value="11.664"
-        class="w-full border border-gray-300 rounded-lg p-2 mb-4 focus:ring-2 focus:ring-yellow-400 outline-none transition-all"
-      />
+      <label id="weightLabel" class="block text-gray-700 font-medium mb-1">Total Weight (in Gram)</label>
+      <input type="number" id="weightGram" value="11.664" class="w-full border border-gray-300 rounded-lg p-2 mb-4 focus:ring-2 focus:ring-yellow-400 outline-none transition-all" />
 
-      <button
-        id="calcButton"
-        class="w-full bg-gradient-to-r from-yellow-500 to-amber-600 text-white font-semibold py-2 rounded-lg shadow-md hover:shadow-lg hover:from-yellow-600 hover:to-amber-700 transition-all duration-300"
-      >
-        হিসাব করুন
-      </button>
+      <!-- Button -->
+      <button id="calcButton" class="w-full bg-gradient-to-r from-yellow-500 to-amber-600 text-white font-semibold py-2 rounded-lg shadow-md hover:shadow-lg hover:from-yellow-600 hover:to-amber-700 transition-all duration-300">Calculate</button>
 
+      <!-- Result -->
       <div id="result" class="mt-6 hidden animate-fadeIn"></div>
-      <div class="mt-6 p-4 bg-yellow-50 rounded-xl shadow-inner">
-  <h3 class="text-lg font-bold text-yellow-800 mb-2">📜 স্বর্ণের মাপ ও বিশুদ্ধতা | Gold Measurement & Purity</h3>
-
-  <p class="text-gray-700 mb-2">
-    <strong>দেশীয় মাপ:</strong><br>
-    ১ ভরি = ১৬ আনা = ৯৬ রতি<br>
-    ১ আনা = ৬ রতি<br>
-    ১ ভরি = ১১.৬৬৩৮ গ্রাম<br>
-    ১ আউন্স = ২৮.৩৪৯৫ গ্রাম = ২.৪৩০৫ ভরি<br>
-    ১ ভরি = ০.৪১১৪৩ আউন্স
-  </p>
-
-  <p class="text-gray-700 mb-2">
-    <strong>Gold Measurement (Local & International):</strong><br>
-    1 Vori = 16 Ana = 96 Roti<br>
-    1 Ana = 6 Roti<br>
-    1 Vori = 11.6638 g<br>
-    1 Ounce = 28.3495 g = 2.4305 Vori<br>
-    1 Vori = 0.41143 Ounce
-  </p>
-
-  <p class="text-gray-700 mb-2">
-    <strong>স্বর্ণের বিশুদ্ধতা:</strong><br>
-    ২৪ ক্যারেট = ৯৯.৯৯% খাঁটি<br>
-    ২২ ক্যারেট = ৯১.৬% খাঁটি<br>
-    ২১ ক্যারেট = ৮৭.৫% খাঁটি<br>
-    ১৮ ক্যারেট = ৭৫% খাঁটি<br>
-    ১৪ ক্যারেট = ৫৮.৫% খাঁটি<br>
-    ১০ ক্যারেট = ৪১.৭% খাঁটি
-  </p>
-
-  <p class="text-gray-700 mb-2">
-    <strong>Gold Purity:</strong><br>
-    24 Carat = 99.99% Pure<br>
-    22 Carat = 91.6% Pure<br>
-    21 Carat = 87.5% Pure<br>
-    18 Carat = 75% Pure<br>
-    14 Carat = 58.5% Pure<br>
-    10 Carat = 41.7% Pure
-  </p>
-
-  <p class="text-gray-700 text-sm">
-    স্বর্ণালংকার ক্রয়ের সময় নিশ্চিত করুন যে গহনার উপর ক্যারেট খোদাই করা আছে। যেমন: ৯৯৯৯ = ২৪ ক্যারেট, ৯১৬ = ২২ ক্যারেট, ৮৭৫ = ২১ ক্যারেট, ৭৫০ = ১৮ ক্যারেট।<br>
-    When buying jewelry, always check the engraved carat mark on the ornament or chain hook. For example: 9999 = 24 Carat, 916 = 22 Carat, 875 = 21 Carat, 750 = 18 Carat.
-  </p>
-</div>
     </div>
 
-    <script>
-      // Tailwind animation setup
-      tailwind.config = {
-        theme: {
-          extend: {
-            keyframes: {
-              fadeIn: {
-                "0%": { opacity: "0", transform: "translateY(10px)" },
-                "100%": { opacity: "1", transform: "translateY(0)" },
-              },
-            },
-            animation: { fadeIn: "fadeIn 0.5s ease-out" },
-          },
-        },
-      };
+    <!-- Footer -->
+    <footer class="w-full text-center">
+      <div class="flex flex-col items-center gap-2 p-4 bg-yellow-100 rounded-xl shadow-inner">
+        <a href="https://anik-kumaar-datta.web.app/" target="_blank" class="flex items-center gap-2 hover:underline">
+          <img src="anik.jpg" alt="Anik K. Datta" class="w-10 h-10 rounded-full border-2 border-yellow-400 object-cover">
+          <span class="text-yellow-800 font-semibold">Design & Developed by Anik K. Datta</span>
+        </a>
+        <p class="text-gray-600 text-sm">© 2025 All Rights Reserved</p>
+      </div>
+    </footer>
+  </div>
 
-      const karatInput = document.getElementById("karat");
-      const weightInput = document.getElementById("weightGram");
-      const calcButton = document.getElementById("calcButton");
-      const langToggle = document.getElementById("langToggle");
-      const resultBox = document.getElementById("result");
-      const title = document.getElementById("title");
-      const karatLabel = document.getElementById("karatLabel");
-      const weightLabel = document.getElementById("weightLabel");
+  <script>
+    const karatInput = document.getElementById("karat");
+    const weightInput = document.getElementById("weightGram");
+    const calcButton = document.getElementById("calcButton");
+    const langToggle = document.getElementById("langToggle");
+    const title = document.getElementById("title");
+    const karatLabel = document.getElementById("karatLabel");
+    const weightLabel = document.getElementById("weightLabel");
+    const resultBox = document.getElementById("result");
 
-      // ✅ Text translations
-      const texts = {
-        bn: {
-          title: "💰 সোনার খাত ক্যালকুলেটর",
-          karatLabel: "সোনার ক্যারেট (যেমন ২২)",
-          weightLabel: "মোট ওজন (গ্রামে)",
-          button: "হিসাব করুন",
-          resultTitle: "ফলাফল:",
-          availText: "মোট সোনার ওজন:",
-          purity: "বিশুদ্ধতা",
-          khatResult: "খাতের ফলাফল:",
-          vori: "ভরি",
-          ana: "আনা",
-          roti: "রতি",
-          point: "পয়েন্ট",
-          remaining: "বাকি সোনা:",
-        },
-        en: {
-          title: "💰 Gold Khat Calculator",
-          karatLabel: "Gold Karat (e.g. 22)",
-          weightLabel: "Total Weight (in Gram)",
-          button: "Calculate",
-          resultTitle: "Results:",
-          availText: "Available Gold Weight:",
-          purity: "Purity",
-          khatResult: "Khat Result:",
-          vori: "Vori",
-          ana: "Ana",
-          roti: "Roti",
-          point: "Point",
-          remaining: "Remaining Gold:",
-        },
-      };
+    // Localization texts
+    const texts = {
+      en: {
+        title: "💰 Gold Khat Calculator",
+        karatLabel: "Gold Karat (e.g. 22)",
+        weightLabel: "Total Weight (in Gram)",
+        button: "Calculate",
+        resultTitle: "Results",
+        purity: "Purity",
+        netGold: "Net Gold Weight",
+        khatResult: "Khat Per Vori",
+        remaining: "Remaining Gold (After Khat)",
+        vori: "Vori",
+        ana: "Ana",
+        roti: "Roti",
+        point: "Point",
+        pureGold: "No Khat (Pure Gold)"
+      },
+      bn: {
+        title: "💰 সোনার খাত ক্যালকুলেটর",
+        karatLabel: "সোনার ক্যারেট (যেমন ২২)",
+        weightLabel: "মোট ওজন (গ্রামে)",
+        button: "হিসাব করুন",
+        resultTitle: "ফলাফল",
+        purity: "বিশুদ্ধতা",
+        netGold: "নেট সোনা ওজন",
+        khatResult: "প্রতি ভরির খাত",
+        remaining: "জমা/বাকি সোনা (খাতের পর)",
+        vori: "ভরি",
+        ana: "আনা",
+        roti: "রতি",
+        point: "পয়েন্ট",
+        pureGold: "খাত নেই (খাঁটি সোনা)"
+      }
+    };
 
-      let currentLang = "bn"; // default Bangla
+    let currentLang = "en";
 
-      // Function: Switch language
-      langToggle.addEventListener("click", () => {
-        currentLang = currentLang === "bn" ? "en" : "bn";
-        applyLanguage();
-      });
+    // Toggle language
+    langToggle.addEventListener("click", () => {
+      currentLang = currentLang === "en" ? "bn" : "en";
+      applyLanguage();
+    });
 
-      function applyLanguage() {
-        const t = texts[currentLang];
-        title.innerText = t.title;
-        karatLabel.innerText = t.karatLabel;
-        weightLabel.innerText = t.weightLabel;
-        calcButton.innerText = t.button;
-        langToggle.innerText = currentLang === "bn" ? "English" : "বাংলা";
+    function applyLanguage() {
+      const t = texts[currentLang];
+      title.innerText = t.title;
+      karatLabel.innerText = t.karatLabel;
+      weightLabel.innerText = t.weightLabel;
+      calcButton.innerText = t.button;
+      langToggle.innerText = currentLang === "en" ? "বাংলা" : "English";
+      if (resultBox.innerHTML) calculateKhat(); // Recalculate result in selected language
+    }
+
+    // Focus on Karat input
+    window.onload = () => karatInput.focus();
+
+    // Press Enter to Calculate
+    [karatInput, weightInput].forEach((input) => input.addEventListener("keypress", (event) => {
+      if (event.key === "Enter") {
+        event.preventDefault();
+        calculateKhat();
+      }
+    }));
+
+    calcButton.addEventListener("click", calculateKhat);
+
+    function calculateKhat() {
+      const karat = parseFloat(karatInput.value);
+      const totalGram = parseFloat(weightInput.value);
+      const t = texts[currentLang];
+
+      const GRAM_PER_VORI = 11.664;
+      const ANA_PER_VORI = 16;
+      const ROTI_PER_ANA = 6;
+      const POINT_PER_ROTI = 10;
+
+      if (isNaN(karat) || isNaN(totalGram)) {
+        resultBox.innerHTML = `<p class='text-red-600 font-semibold'>⚠️ Please enter valid numbers!</p>`;
+        resultBox.classList.remove("hidden");
+        return;
       }
 
-      // Focus on Karat input
-      window.onload = () => karatInput.focus();
+      // Available Gold
+      let totalVoriAvail = totalGram / GRAM_PER_VORI;
+      let availVori = Math.trunc(totalVoriAvail);
+      let availAnaTotal = (totalVoriAvail - availVori) * ANA_PER_VORI;
+      let availAna = Math.trunc(availAnaTotal);
+      let availRotiTotal = (availAnaTotal - availAna) * ROTI_PER_ANA;
+      let availRoti = Math.trunc(availRotiTotal);
+      let availPoint = Math.round((availRotiTotal - availRoti) * POINT_PER_ROTI);
 
-      // Press Enter to Calculate
-      [karatInput, weightInput].forEach((input) =>
-        input.addEventListener("keypress", (event) => {
-          if (event.key === "Enter") {
-            event.preventDefault();
-            calculateKhat();
-          }
-        })
-      );
+      if (availPoint === 10) { availRoti++; availPoint = 0; }
+      if (availRoti >= 6) { availAna += Math.floor(availRoti / 6); availRoti %= 6; }
+      if (availAna >= 16) { availVori += Math.floor(availAna / 16); availAna %= 16; }
 
-      calcButton.addEventListener("click", calculateKhat);
-
-      function calculateKhat() {
-        const karat = parseFloat(karatInput.value);
-        const totalGram = parseFloat(weightInput.value);
-        const t = texts[currentLang];
-
-        const GRAM_PER_VORI = 11.664;
-        const ANA_PER_VORI = 16;
-        const ROTI_PER_ANA = 6;
-        const POINT_PER_ROTI = 10;
-
-        // Convert available gold weight
-        let totalVoriAvail = totalGram / GRAM_PER_VORI;
-        let availVori = Math.trunc(totalVoriAvail);
-        let availAnaTotal = (totalVoriAvail - availVori) * ANA_PER_VORI;
-        let availAna = Math.trunc(availAnaTotal);
-        let availRotiTotal = (availAnaTotal - availAna) * ROTI_PER_ANA;
-        let availRoti = Math.trunc(availRotiTotal);
-        let availPoint = Math.round(
-          (availRotiTotal - availRoti) * POINT_PER_ROTI
-        );
-
-        // Adjust carries
-        if (availPoint === 10) {
-          availRoti += 1;
-          availPoint = 0;
-        }
-        if (availRoti >= 6) {
-          availAna += Math.floor(availRoti / 6);
-          availRoti = availRoti % 6;
-        }
-        if (availAna >= 16) {
-          availVori += Math.floor(availAna / 16);
-          availAna = availAna % 16;
-        }
-
-        const purityPercent = (100 / 24) * karat;
-        const impurity = 100 - purityPercent;
-        const netGram = (totalGram * impurity) / 100;
-
-        // Convert Khat
-        let totalVoriKhat = netGram / GRAM_PER_VORI;
-        let vori = Math.trunc(totalVoriKhat);
-        let anaTotal = (totalVoriKhat - vori) * ANA_PER_VORI;
-        let ana = Math.trunc(anaTotal);
-        let rotiTotal = (anaTotal - ana) * ROTI_PER_ANA;
-        let roti = Math.trunc(rotiTotal);
-        let point = Math.round((rotiTotal - roti) * POINT_PER_ROTI);
-
-        if (point === 10) {
-          roti += 1;
-          point = 0;
-        }
-        if (roti >= 6) {
-          ana += Math.floor(roti / 6);
-          roti = roti % 6;
-        }
-        if (ana >= 16) {
-          vori += Math.floor(ana / 16);
-          ana = ana % 16;
-        }
-
-        // Remaining Gold
-        const remainingGram = totalGram - netGram;
-        const remainVori = (remainingGram / GRAM_PER_VORI).toFixed(4);
-
+      // If karat = 0
+      if (karat === 0) {
         resultBox.innerHTML = `
           <div class="bg-yellow-50 border border-yellow-200 rounded-xl p-4 shadow-sm">
-            <p class="font-semibold text-yellow-700 mb-3">${t.resultTitle}</p>
-            
-            <p class="text-gray-600 text-sm mb-1 text-center">${t.availText}</p>
-            <div class="flex justify-around bg-amber-100 rounded-lg py-3 mb-3 shadow-inner">
-              <div><p class="font-bold text-amber-700">${t.vori}</p><p class="text-2xl font-bold text-yellow-700">${availVori}</p></div>
-              <div><p class="font-bold text-amber-700">${t.ana}</p><p class="text-2xl font-bold text-yellow-700">${availAna}</p></div>
-              <div><p class="font-bold text-amber-700">${t.roti}</p><p class="text-2xl font-bold text-yellow-700">${availRoti}</p></div>
-              <div><p class="font-bold text-amber-700">${t.point}</p><p class="text-2xl font-bold text-yellow-700">${availPoint}</p></div>
-            </div>
-
-            <p class="text-center text-gray-700 text-sm mb-3">${t.purity}: ${purityPercent.toFixed(2)}% | Net Gold: ${netGram.toFixed(4)}g</p>
-
-            <hr class="my-3 border-yellow-200" />
-            <p class="font-semibold text-center text-amber-700">${t.khatResult}</p>
-            <div class="flex justify-around bg-amber-100 rounded-lg py-3 mt-2 shadow-inner">
-              <div><p class="text-lg font-bold text-amber-700">${t.vori}</p><p class="text-3xl font-extrabold text-yellow-700">${vori}</p></div>
-              <div><p class="text-lg font-bold text-amber-700">${t.ana}</p><p class="text-3xl font-extrabold text-yellow-700">${ana}</p></div>
-              <div><p class="text-lg font-bold text-amber-700">${t.roti}</p><p class="text-3xl font-extrabold text-yellow-700">${roti}</p></div>
-              <div><p class="text-lg font-bold text-amber-700">${t.point}</p><p class="text-3xl font-extrabold text-yellow-700">${point}</p></div>
-            </div>
-
-            <hr class="my-3 border-yellow-200" />
-            <p class="text-center text-amber-700 font-semibold">${t.remaining} ${remainVori} ভরি সমান</p>
+            <p class="text-center text-lg font-bold text-yellow-800">${t.pureGold}</p>
+            <p class="text-center text-gray-700">1 ${t.vori}, 0 ${t.ana}, 0 ${t.roti}, 0 ${t.point}</p>
           </div>
         `;
-
         resultBox.classList.remove("hidden");
+        return;
       }
-    </script>
-  </body>
+
+      const purityPercent = (100 / 24) * karat;
+      const netGram = (totalGram * (100 - purityPercent)) / 100;
+
+      let totalVoriKhat = netGram / GRAM_PER_VORI;
+      let vori = Math.trunc(totalVoriKhat);
+      let anaTotal = (totalVoriKhat - vori) * ANA_PER_VORI;
+      let ana = Math.trunc(anaTotal);
+      let rotiTotal = (anaTotal - ana) * ROTI_PER_ANA;
+      let roti = Math.trunc(rotiTotal);
+      let point = Math.round((rotiTotal - roti) * POINT_PER_ROTI);
+
+      if (point === 10) { roti += 1; point = 0; }
+      if (roti >= 6) { ana += Math.floor(roti / 6); roti %= 6; }
+      if (ana >= 16) { vori += Math.floor(ana / 16); ana %= 16; }
+
+      // Remaining Gold
+      const khatPoints = vori * 16 * 6 * 10 + ana * 6 * 10 + roti * 10 + point;
+      const availPoints = availVori * 16 * 6 * 10 + availAna * 6 * 10 + availRoti * 10 + availPoint;
+      let remainingPoints = availPoints - khatPoints;
+      if (remainingPoints < 0) remainingPoints = 0;
+
+      let remVori = Math.floor(remainingPoints / (16 * 6 * 10));
+      let remAna = Math.floor((remainingPoints % (16 * 6 * 10)) / (6 * 10));
+      let remRoti = Math.floor((remainingPoints % (6 * 10)) / 10);
+      let remPoint = remainingPoints % 10;
+
+      // Display result
+      resultBox.innerHTML = `
+        <div class="bg-yellow-50 border border-yellow-200 rounded-xl p-4 shadow-sm">
+          <p class="font-semibold text-yellow-700 mb-3 text-center text-lg">${t.resultTitle}</p>
+          <p class="text-center text-gray-700 text-lg mb-3">${t.purity}: <span class="font-semibold">${purityPercent.toFixed(2)}%</span> | ${t.netGold}: <span class="font-semibold">${netGram.toFixed(4)}g</span></p>
+
+          <div class="mb-4 bg-amber-100 border border-amber-300 rounded-xl p-4 shadow-inner">
+            <p class="text-center font-bold text-amber-700 mb-2">${t.khatResult}:</p>
+            <div class="flex justify-around text-amber-800">
+              <div><p class="font-bold">${t.vori}</p><p class="text-3xl font-extrabold text-center">${vori}</p></div>
+              <div><p class="font-bold">${t.ana}</p><p class="text-3xl font-extrabold text-center">${ana}</p></div>
+              <div><p class="font-bold">${t.roti}</p><p class="text-3xl font-extrabold text-center">${roti}</p></div>
+              <div><p class="font-bold">${t.point}</p><p class="text-3xl font-extrabold text-center">${point}</p></div>
+            </div>
+          </div>
+
+          <div class="mb-4 bg-green-100 border border-green-300 rounded-xl p-4 shadow-inner">
+            <p class="text-center font-bold text-green-700 mb-2">${t.remaining}:</p>
+            <div class="flex justify-around text-green-800">
+              <div><p class="font-bold">${t.vori}</p><p class="text-3xl font-extrabold text-center">${remVori}</p></div>
+              <div><p class="font-bold">${t.ana}</p><p class="text-3xl font-extrabold text-center">${remAna}</p></div>
+              <div><p class="font-bold">${t.roti}</p><p class="text-3xl font-extrabold text-center">${remRoti}</p></div>
+              <div><p class="font-bold">${t.point}</p><p class="text-3xl font-extrabold text-center">${remPoint}</p></div>
+            </div>
+          </div>
+        </div>
+      `;
+
+      resultBox.classList.remove("hidden");
+    }
+
+    // Tailwind animation config
+    tailwind.config = {
+      theme: {
+        extend: {
+          keyframes: {
+            fadeIn: { "0%": { opacity: "0", transform: "translateY(10px)" }, "100%": { opacity: "1", transform: "translateY(0)" } },
+          },
+          animation: { fadeIn: "fadeIn 0.5s ease-out" },
+        },
+      },
+    };
+  </script>
+</body>
+
 </html>
