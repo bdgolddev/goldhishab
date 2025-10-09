@@ -5,34 +5,126 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description"
-    content="Gold Khat Calculator to convert gold karat to khat and calculate net gold weight in Vori, Ana, Roti, and Point.">
+    content="Gold Khaad  Calculator to convert gold karat to Khaad  and calculate net gold weight in Vori, Ana, Roti, and Point.">
   <meta name="keywords"
-    content="khatiSona, khatHisab, GoldCalculator, KhatCalculator, KhaitCalculator, KaratToKhaitCalculator, KaratToKhatCalculator, GoldKaratToKhaitCalculator, GoldKaratToKhatCalculator, VoriAnaRotiPoint">
+    content="Khaad iSona, Khaad Hisab, GoldCalculator, Khaad Calculator, KhaitCalculator, KaratToKhaitCalculator, KaratToKhaad Calculator, GoldKaratToKhaitCalculator, GoldKaratToKhaad Calculator, VoriAnaRotiPoint">
   <meta name="author" content="Anik K. Datta">
-  <title>Gold Khat Calculator</title>
+  <title>Gold Khaad Calculator</title>
   <link rel="icon" type="image/x-icon" href="favicon.ico">
   <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap');
+
+    body {
+      font-family: 'Roboto', sans-serif;
+    }
+
+    /* In your main CSS file (e.g., app.css or tailwind.css) */
+    ::selection {
+      background: theme('colors.purple.600');
+      /* Example: using a Tailwind color from your config */
+      color: theme('colors.white');
+      /* Example: using a Tailwind color */
+    }
+
+    /* Or, using direct color values */
+    ::selection {
+      background: #ffb7283a;
+      /* Example: custom hex color for background */
+      color: #000000;
+      /* Example: custom hex color for text */
+    }
+  </style>
 </head>
 
-<body  class="min-h-screen flex flex-col bg-gradient-to-br from-yellow-50 to-amber-100">
-  <div
-    class="bg-gradient-to-br from-yellow-50 to-amber-100 flex flex-col items-center justify-center p-4 gap-4">
+<body class="min-h-screen flex flex-col bg-gradient-to-br from-yellow-50 to-amber-100">
+
+  <header class="text-center py-6 md:py-8 bg-gradient-to-r from-yellow-50 via-amber-100 to-yellow-50 shadow-md relative overflow-hidden mb-4">
+  <!-- Animated Gold Shine Effect -->
+  <div class="absolute inset-0 bg-gradient-to-r from-transparent via-white/40 to-transparent animate-shine"></div>
+
+  <!-- Logo and Title -->
+  <div class="relative flex flex-row items-center justify-center animate-fade-in">
+    <img src="./favicon.png" alt="Khaad Hishab Logo" height="80" width="80" class="me-2" />
+    <h1 class="text-3xl md:text-4xl font-extrabold text-amber-700 tracking-wide drop-shadow-sm">
+      খাদ হিসাব <span class="text-amber-600">(Khaad Hishab)</span>
+    </h1>
+  </div>
+
+  <!-- Subtitle -->
+  <p class="relative text-sm md:text-base text-amber-800 mt-2 animate-fade-in-delayed">
+    স্মার্ট গোল্ড ক্যারেট গণক | Smart Gold Karat Calculator
+  </p>
+
+  <!-- Version Badge -->
+  <span class="relative inline-block mt-3 px-4 py-1 text-xs md:text-sm font-semibold text-amber-900 bg-gradient-to-r from-amber-300 to-yellow-200 rounded-full shadow-md border border-amber-400 animate-pulse-slow">
+    🔸 Version 2.0.3
+  </span>
+
+  <!-- Custom Animation Styles -->
+  <style>
+    @keyframes shine {
+      0% {
+        transform: translateX(-100%);
+      }
+      100% {
+        transform: translateX(100%);
+      }
+    }
+    .animate-shine {
+      animation: shine 3s infinite linear;
+    }
+
+    @keyframes fadeIn {
+      0% {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    .animate-fade-in {
+      animation: fadeIn 1s ease-out forwards;
+    }
+    .animate-fade-in-delayed {
+      animation: fadeIn 1.5s ease-out forwards;
+    }
+
+    @keyframes pulseSlow {
+      0%, 100% {
+        box-shadow: 0 0 10px rgba(255, 191, 0, 0.5);
+      }
+      50% {
+        box-shadow: 0 0 20px rgba(255, 191, 0, 0.8);
+      }
+    }
+    .animate-pulse-slow {
+      animation: pulseSlow 3s infinite ease-in-out;
+    }
+  </style>
+</header>
+
+
+  <div class="bg-gradient-to-br from-yellow-50 to-amber-100 flex flex-col items-center justify-center p-4 gap-4">
 
     <!-- Calculator Container -->
     <div
       class="bg-white rounded-2xl shadow-xl w-full max-w-md p-6 transform transition-all duration-500 hover:scale-[1.02]">
       <div class="flex justify-between items-center mb-4">
-        <h2 id="title" class="text-2xl font-bold text-yellow-700 flex items-center gap-2">💰 Gold Khat Calculator</h2>
+        <h2 id="title" class="text-2xl font-bold text-yellow-700 flex items-center gap-2">💰 Gold Khaad Calculator</h2>
         <button id="langToggle"
           class="text-sm bg-amber-200 hover:bg-amber-300 text-yellow-800 font-semibold px-3 py-1 rounded">বাংলা</button>
       </div>
 
       <!-- Inputs -->
       <label id="karatLabel" class="block text-gray-700 font-medium mb-1">Gold Karat (e.g. 22)</label>
-      <input type="number" id="karat" value="22" autofocus
+      <input type="number" id="karat" value="22" onclick="this.select();"
         class="w-full border border-gray-300 rounded-lg p-2 mb-4 focus:ring-2 focus:ring-yellow-400 outline-none transition-all" />
 
-      <label id="weightLabel" class="block text-gray-700 font-medium mb-1">Total Weight (in Gram) <small>(11.664g = 1 Vori)</small></label>
+      <label id="weightLabel" class="block text-gray-700 font-medium mb-1">Total Weight (in Gram) <small>(11.664g = 1
+          Vori)</small></label>
       <input type="number" id="weightGram" value="11.664" disabled
         class="w-full border border-gray-300 rounded-lg p-2 mb-4 focus:ring-2 focus:ring-yellow-400 outline-none transition-all cursor-not-allowed" />
 
@@ -41,14 +133,15 @@
         class="w-full bg-gradient-to-r from-yellow-500 to-amber-600 text-white font-semibold py-2 rounded-lg shadow-md hover:shadow-lg hover:from-yellow-600 hover:to-amber-700 transition-all duration-300">Calculate</button>
 
       <!-- Result -->
-      <div id="result" class="mt-6 hidden animate-fadeIn"></div>
+      <div id="result" class="my-8 hidden animate-fadeIn"></div>
     </div>
 
     <!-- Footer -->
-    <footer class="w-full text-center mt-auto">
+    <footer class="w-full text-center mt-8">
       <div class="flex flex-col items-center gap-2 p-4 bg-yellow-100 rounded-xl shadow-inner">
         <a href="https://anik-kumaar-datta.web.app/" target="_blank" class="flex items-center gap-2 hover:underline">
-          <img src="https://avatars.githubusercontent.com/u/20338169?v=4" alt="Anik K. Datta" class="w-6 h-6 rounded-full">
+          <img src="https://avatars.githubusercontent.com/u/20338169?v=4" alt="Anik K. Datta"
+            class="w-6 h-6 rounded-full">
           <span class="text-yellow-800 font-semibold">Design & Developed by Anik K. Datta</span>
         </a>
         <p class="text-gray-600 text-sm">© 2025 All Rights Reserved</p>
@@ -69,36 +162,54 @@
     // Localization texts
     const texts = {
       en: {
-        title: "💰 Gold Khat Calculator",
+        title: "💰 Gold Khaad  Calculator",
         karatLabel: "Gold Karat (e.g. 22)",
+        karatText: "Gold Karat",
         weightLabel: "Total Weight (in Gram)",
         button: "Calculate",
         resultTitle: "Results",
         purity: "Purity",
-        netGold: "Net Khat Weight",
-        khatResult: "Khat Per Vori",
-        remaining: "Remaining Gold (After Khat)",
+        netGold: "Khaad  Weight",
+        KhaadResult: "Khaad  Per Vori",
+        remaining: "Remaining Gold (After Khaad )",
         vori: "Vori",
         ana: "Ana",
         roti: "Roti",
         point: "Point",
-        pureGold: "No Khat (Pure Gold)"
+        pureGold: "No Khaad  (Pure Gold)",
+        worningMessage: `
+        <span class="font-medium">⚠️ Invalid Gold Karat Input!</span>
+        <ul class="mt-1.5 list-disc list-inside">
+          <li>Please enter a valid gold karat between <b>1 and 24</b>.</li>
+          <li>Gold karat cannot be <b>zero or negative</b>.</li>
+          <li>Example: Valid entries are <b>18, 22, or 24</b> karat only.</li>
+        </ul>
+        `
       },
       bn: {
-        title: "💰 সোনার খাত ক্যালকুলেটর",
+        title: "💰 সোনার খাদ ক্যালকুলেটর",
         karatLabel: "সোনার ক্যারেট (যেমন ২২)",
+        karatText: "সোনার ক্যারেট",
         weightLabel: "মোট ওজন (গ্রামে)",
         button: "হিসাব করুন",
         resultTitle: "ফলাফল",
         purity: "বিশুদ্ধতা",
-        netGold: "নেট খাত ওজন",
-        khatResult: "প্রতি ভরির খাত",
-        remaining: "জমা/বাকি সোনা (খাতের পর)",
+        netGold: "খাদ ওজন",
+        KhaadResult: "প্রতি ভরির খাদ",
+        remaining: "জমা/বাকি সোনা (খাদের পর)",
         vori: "ভরি",
         ana: "আনা",
         roti: "রতি",
         point: "পয়েন্ট",
-        pureGold: "খাত নেই (খাঁটি সোনা)"
+        pureGold: "খাদ নেই (খাঁটি সোনা)",
+        worningMessage: `
+        <span class="font-medium">⚠️<b> সোনার ক্যারেটের ইনপুটটি সঠিক নয়!</b></span>
+        <ul class="mt-1.5 list-disc list-inside">
+          <li>অনুগ্রহ করে <b>১ থেকে ২৪</b> ক্যারেটের মধ্যে সঠিক সোনার ক্যারেট দিন।</li>
+          <li>সোনার ক্যারেট <b>০ বা ঋণাত্মক</b> হতে পারবে না।</li>
+          <li>উদাহরণ: শুধুমাত্র <b>১৮, ২১, ২২ বা ২৪</b> ক্যারেট বৈধ ইনপুট।</li>
+        </ul>
+        `
       }
     };
 
@@ -117,23 +228,26 @@
       weightLabel.innerText = t.weightLabel;
       calcButton.innerText = t.button;
       langToggle.innerText = currentLang === "en" ? "বাংলা" : "English";
-      if (resultBox.innerHTML) calculateKhat(); // Recalculate result in selected language
+      if (resultBox.innerHTML) calculateKhaad(); // Recalculate result in selected language
     }
 
     // Focus on Karat input
-    window.onload = () => karatInput.focus();
+    window.onload = () => {
+      karatInput.focus()
+      karatInput.select()
+    };
 
     // Press Enter to Calculate
     [karatInput, weightInput].forEach((input) => input.addEventListener("keypress", (event) => {
       if (event.key === "Enter") {
         event.preventDefault();
-        calculateKhat();
+        calculateKhaad();
       }
     }));
 
-    calcButton.addEventListener("click", calculateKhat);
+    calcButton.addEventListener("click", calculateKhaad);
 
-    function calculateKhat() {
+    function calculateKhaad() {
       const karat = parseFloat(karatInput.value);
       const totalGram = parseFloat(weightInput.value);
       const t = texts[currentLang];
@@ -143,8 +257,20 @@
       const ROTI_PER_ANA = 6;
       const POINT_PER_ROTI = 10;
 
-      if (isNaN(karat) || isNaN(totalGram)) {
-        resultBox.innerHTML = `<p class='text-red-600 font-semibold'>⚠️ Please enter valid numbers!</p>`;
+      if (isNaN(karat) || isNaN(totalGram) || karat < 0 || karat > 24 || totalGram <= 0) {
+        resultBox.innerHTML = `
+        <div class="flex p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50" role="alert">
+          <svg class="shrink-0 inline w-4 h-4 me-3 mt-[2px]" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+            <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z"/>
+          </svg>
+          <div>
+            ${t.worningMessage}
+            <hr class="my-2 border-red-200">
+            
+          </div>
+        </div>
+
+        `;
         resultBox.classList.remove("hidden");
         return;
       }
@@ -177,9 +303,9 @@
       const purityPercent = (100 / 24) * karat;
       const netGram = (totalGram * (100 - purityPercent)) / 100;
 
-      let totalVoriKhat = netGram / GRAM_PER_VORI;
-      let vori = Math.trunc(totalVoriKhat);
-      let anaTotal = (totalVoriKhat - vori) * ANA_PER_VORI;
+      let totalVoriKhaad = netGram / GRAM_PER_VORI;
+      let vori = Math.trunc(totalVoriKhaad);
+      let anaTotal = (totalVoriKhaad - vori) * ANA_PER_VORI;
       let ana = Math.trunc(anaTotal);
       let rotiTotal = (anaTotal - ana) * ROTI_PER_ANA;
       let roti = Math.trunc(rotiTotal);
@@ -190,9 +316,9 @@
       if (ana >= 16) { vori += Math.floor(ana / 16); ana %= 16; }
 
       // Remaining Gold
-      const khatPoints = vori * 16 * 6 * 10 + ana * 6 * 10 + roti * 10 + point;
+      const KhaadPoints = vori * 16 * 6 * 10 + ana * 6 * 10 + roti * 10 + point;
       const availPoints = availVori * 16 * 6 * 10 + availAna * 6 * 10 + availRoti * 10 + availPoint;
-      let remainingPoints = availPoints - khatPoints;
+      let remainingPoints = availPoints - KhaadPoints;
       if (remainingPoints < 0) remainingPoints = 0;
 
       let remVori = Math.floor(remainingPoints / (16 * 6 * 10));
@@ -204,10 +330,12 @@
       resultBox.innerHTML = `
         <div class="bg-yellow-50 border border-yellow-200 rounded-xl p-4 shadow-sm">
           <p class="font-semibold text-yellow-700 mb-3 text-center text-lg">${t.resultTitle}</p>
+          <p class="text-center text-gray-700 text-lg mb-3 bg-orange-100 border border-orange-300 rounded-xl p-2"><span class="text-2xl font-medium">${t.karatText} :</span> <span class="text-2xl font-semibold">${karat.toFixed(2)}K</span> 
+          </p>
           <p class="text-center text-gray-700 text-lg mb-3">${t.purity}: <span class="font-semibold">${purityPercent.toFixed(2)}%</span> <br/> ${t.netGold}: <span class="font-semibold">${netGram.toFixed(4)}g</span></p>
 
           <div class="mb-4 bg-amber-100 border border-amber-300 rounded-xl p-4 shadow-inner">
-            <p class="text-center font-bold text-amber-700 mb-2">${t.khatResult}:</p>
+            <p class="text-center font-bold text-amber-700 mb-2">${t.KhaadResult}:</p>
             <div class="flex justify-around text-amber-800">
               <div><p class="font-bold">${t.vori}</p><p class="text-3xl font-extrabold text-center">${vori}</p></div>
               <div><p class="font-bold">${t.ana}</p><p class="text-3xl font-extrabold text-center">${ana}</p></div>
