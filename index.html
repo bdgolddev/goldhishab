@@ -58,7 +58,7 @@
 
     <span
       class="absolute top-3 right-5 px-4 py-1 text-xs md:text-sm font-semibold text-amber-900 bg-gradient-to-r from-amber-300 to-yellow-200 rounded-full shadow animate-pulse">
-      🔸 Version 3.0.3
+      🔸 Version 3.0.4
     </span>
   </header>
 
@@ -122,6 +122,61 @@
       </p>
     </section>
 
+
+    <!-- Rating & Support Section -->
+    <section
+      class="w-full max-w-lg bg-white/80 backdrop-blur-md rounded-3xl border border-yellow-200 shadow-xl p-6 text-center my-10 transition-all hover:shadow-amber-200">
+      <h3 id="rateTitle" class="text-xl font-bold text-amber-800 mb-4">⭐ Rate & Support</h3>
+
+      <!-- Rating Stars -->
+      <div id="ratingStars" class="flex justify-center gap-2 mb-4">
+        <button class="star text-3xl text-gray-400 hover:text-yellow-500 transition" data-value="1">★</button>
+        <button class="star text-3xl text-gray-400 hover:text-yellow-500 transition" data-value="2">★</button>
+        <button class="star text-3xl text-gray-400 hover:text-yellow-500 transition" data-value="3">★</button>
+        <button class="star text-3xl text-gray-400 hover:text-yellow-500 transition" data-value="4">★</button>
+        <button class="star text-3xl text-gray-400 hover:text-yellow-500 transition" data-value="5">★</button>
+      </div>
+
+      <p id="ratingMessage" class="text-amber-700 font-medium mb-6">How did you like this app?</p>
+
+      <!-- Buy Me a Coffee Section -->
+      <div
+        class="bg-amber-50 border border-yellow-200 rounded-2xl shadow-inner p-6 flex flex-col items-center relative overflow-hidden group mt-8">
+
+        <!-- Animated glow background -->
+        <div
+          class="absolute inset-0 bg-gradient-to-tr from-amber-100 via-transparent to-yellow-50 opacity-0 group-hover:opacity-100 transition duration-700">
+        </div>
+
+        <!-- Title -->
+        <h4 id="coffeeTitle" class="font-bold text-amber-800 mb-2 relative z-10">
+          ☕ Buy Me a Coffee!
+        </h4>
+
+        <!-- Subtitle -->
+        <p id="coffeeText" class="text-gray-700 text-sm mb-3 relative z-10">
+          Support this project via bKash 💖
+        </p>
+
+        <!-- QR Container -->
+        <div
+          class="relative z-10 w-44 h-44 mb-3 rounded-2xl border border-pink-200 shadow-xl overflow-hidden animate-pulse hover:animate-none hover:scale-105 transition-transform duration-300">
+          <img src="./bkashQrOnly.jpg" alt="bKash QR" class="w-full h-full object-cover rounded-2xl">
+        </div>
+
+        <!-- Instruction -->
+        <p id="coffeeInstr" class="text-sm text-gray-700 text-center relative z-10">
+          Scan this QR from your bKash app or send money directly to:
+        </p>
+
+        <!-- Payment Number -->
+        <p class="font-bold text-lg text-pink-700 mt-1 select-all relative z-10">
+          01970 192772
+        </p>
+      </div>
+
+    </section>
+
   </main>
 
   <!-- Footer -->
@@ -138,6 +193,87 @@
   </footer>
 
   <script>
+    // --- Rating System ---
+    // --- Elements ---
+    const stars = document.querySelectorAll(".star");
+    const ratingMsg = document.getElementById("ratingMessage");
+    const totalVisitorsEl = document.getElementById("totalVisitors");
+    const totalRatingsEl = document.getElementById("totalRatings");
+
+    // --- LocalStorage keys ---
+    const LOCAL_KEY = "appRatingValue";
+    const VISITOR_KEY = "visitorCount";
+    const TOTAL_RATINGS_KEY = "allRatings";
+
+    let rated = false;
+
+    // --- Load saved data ---
+    let savedRating = parseInt(localStorage.getItem(LOCAL_KEY)) || 0;
+    let totalVisitors = parseInt(localStorage.getItem(VISITOR_KEY)) || 0;
+    let allRatings = JSON.parse(localStorage.getItem(TOTAL_RATINGS_KEY)) || [];
+
+    // --- Track visitor only once per browser ---
+    if (!localStorage.getItem("hasVisited")) {
+      totalVisitors++;
+      localStorage.setItem(VISITOR_KEY, totalVisitors);
+      localStorage.setItem("hasVisited", "true");
+    }
+
+    // --- Show rating visually ---
+    function setRating(value, showMessage = true, previous = false) {
+      stars.forEach((s, i) => {
+        s.classList.toggle("text-yellow-500", i < value);
+        s.classList.toggle("text-gray-400", i >= value);
+      });
+
+      const t = texts[currentLang];
+      if (showMessage) {
+        if (previous && value > 0) {
+          ratingMsg.innerHTML = currentLang === "bn"
+            ? `আপনি পূর্বে <b>${value}★</b> রেট দিয়েছেন ☀️`
+            : `You previously rated <b>${value}★</b> ☀️`;
+        } else {
+          ratingMsg.innerHTML = currentLang === "bn"
+            ? `ধন্যবাদ! আপনি <b>${value}★</b> রেট দিয়েছেন 💛`
+            : `Thanks! You rated <b>${value}★</b> 💛`;
+        }
+      }
+
+      rated = true;
+    }
+
+    // --- When user clicks a star ---
+    stars.forEach(star => {
+      star.addEventListener("click", () => {
+        const value = parseInt(star.dataset.value);
+        setRating(value);
+        savedRating = value;
+        localStorage.setItem(LOCAL_KEY, value);
+
+        // Save into total ratings array
+        allRatings.push(value);
+        localStorage.setItem(TOTAL_RATINGS_KEY, JSON.stringify(allRatings));
+
+        updateStats();
+      });
+    });
+
+    // --- Update total visitors & average rating ---
+    function updateStats() {
+      const avgRating =
+        allRatings.length > 0
+          ? (allRatings.reduce((a, b) => a + b, 0) / allRatings.length).toFixed(1)
+          : 0;
+
+      totalVisitorsEl.textContent =
+        currentLang === "bn"
+          ? `মোট দর্শক: ${totalVisitors}`
+          : `Total Visitors: ${totalVisitors}`;
+      totalRatingsEl.textContent =
+        currentLang === "bn"
+          ? `গড় রেটিং: ${avgRating}★ (${allRatings.length} ভোট)`
+          : `Average Rating: ${avgRating}★ (${allRatings.length} votes)`;
+    }
     // ELEMENTS
     const karatInput = document.getElementById("karat");
     const weightInput = document.getElementById("weightGram");
