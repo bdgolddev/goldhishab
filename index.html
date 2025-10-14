@@ -34,6 +34,18 @@
       color: #000000;
       /* Example: custom hex color for text */
     }
+
+    /* Chrome, Safari, Edge, Opera */
+    input::-webkit-outer-spin-button,
+    input::-webkit-inner-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+    }
+
+    /* Firefox */
+    input[type=number] {
+      -moz-appearance: textfield;
+    }
   </style>
 </head>
 
@@ -58,7 +70,7 @@
 
     <span
       class="absolute top-3 right-5 px-4 py-1 text-xs md:text-sm font-semibold text-amber-900 bg-gradient-to-r from-amber-300 to-yellow-200 rounded-full shadow animate-pulse">
-      🔸 Version 3.0.4
+      🔸 Version 3.0.5
     </span>
   </header>
 
@@ -80,20 +92,19 @@
       </div>
 
       <label id="karatLabel" class="block text-gray-700 font-semibold mb-1">Gold Karat (e.g. 22)</label>
-      <input type="number" id="karat" value="22" onclick=this.select()
-        class="w-full border border-amber-300 rounded-xl p-3 mb-4 focus:ring-2 focus:ring-amber-400 outline-none bg-white font-medium text-gray-700 transition" />
+      <input type="number" id="karat" value="22.00" onclick=this.select()
+        class="w-full border border-amber-300 rounded-lg p-3 mb-4 focus:ring-2 focus:ring-amber-400 outline-none bg-white font-medium text-gray-700 transition" />
 
       <label id="weightLabel" class="block text-gray-700 font-semibold mb-1">Total Weight (in Gram)
         <small class="text-gray-500">(11.664g = 1 Vori)</small></label>
       <input type="number" id="weightGram" value="11.664" disabled
-        class="w-full border border-amber-300 rounded-xl p-3 mb-6 bg-amber-50 text-gray-600 font-medium cursor-not-allowed" />
+        class="w-full border border-amber-300 rounded-lg p-3 mb-6 bg-amber-50 text-gray-600 font-medium cursor-not-allowed" />
 
       <button id="calcButton"
-        class="w-full bg-gradient-to-r from-yellow-500 to-amber-600 text-white font-bold py-3 rounded-xl shadow-md hover:shadow-xl hover:scale-[1.02] transition-transform duration-300">
+        class="w-full bg-gradient-to-r from-yellow-500 to-amber-600 text-white font-bold py-3 rounded-lg shadow-md hover:shadow-xl hover:scale-[1.02] transition-transform duration-300">
         Calculate
       </button>
 
-      <!-- <div id="result" class="mt-6 hidden"></div> -->
       <!-- Result -->
       <div id="result" class="my-8 hidden animate-fadeIn"></div>
     </section>
@@ -115,7 +126,7 @@
     <section class="w-full max-w-6xl bg-white/80 backdrop-blur-md rounded-3xl border border-yellow-200 shadow-xl p-6">
       <h3 class="text-lg font-semibold text-amber-800 mb-3">🌍 International Gold Price</h3>
       <iframe src="https://goldbroker.com/widget/live/XAU?currency=USD&height=320" scrolling="no" frameborder="0"
-        width="100%" height="320" class="rounded-xl shadow-inner border border-amber-100"></iframe>
+        width="100%" height="320" class="rounded-lg shadow-inner border border-amber-100"></iframe>
       <p class="text-sm text-gray-600 mt-2">Gold price by
         <a href="https://goldbroker.com/" target="_blank"
           class="text-amber-700 font-semibold hover:underline">GoldBroker.com</a>
@@ -381,7 +392,11 @@
     calcButton.addEventListener("click", calculateKhaad);
 
     function calculateKhaad() {
+      // Clear previous result
+      resultBox.innerHTML = "";
+      karatInput.select()
       const karat = parseFloat(karatInput.value);
+
       const totalGram = parseFloat(weightInput.value);
       const t = texts[currentLang];
 
@@ -449,17 +464,17 @@
 
       // Display result (shows both khaad (impurity) and pure-gold for clarity)
       resultBox.innerHTML = `
-        <div class="bg-yellow-50 border border-yellow-200 rounded-xl p-4 shadow-sm animate-fadeIn">
+        <div class="bg-yellow-50 border border-yellow-200 rounded-lg p-4 shadow-sm animate-fadeIn">
           <p class="font-semibold text-yellow-700 mb-3 text-center text-lg">${t.resultTitle}</p>
 
-          <p class="text-center text-gray-700 text-lg mb-3 bg-orange-100 border border-orange-300 text-orange-800 rounded-xl p-2">
+          <p class="text-center text-gray-700 text-lg mb-3 bg-orange-100 border border-orange-300 text-orange-800 rounded-lg p-2">
             <span class="text-2xl font-medium">${t.karatText} :</span>
             <span class="text-2xl font-semibold">${karat.toFixed(2)}K</span>
           </p>
 
           
 
-          <div class="mb-4 bg-amber-100 border border-amber-300 rounded-xl p-4 shadow-inner">
+          <div class="mb-4 bg-amber-100 border border-amber-300 rounded-lg p-4 shadow-inner">
             <p class="text-center font-bold text-amber-700 mb-2">${t.KhaadResult}:</p>
             <div class="flex justify-around text-center text-amber-800">
               <div><p class="font-bold">${t.vori}</p><p class="text-3xl font-extrabold text-center">${vori}</p></div>
@@ -469,7 +484,7 @@
             </div>
           </div>
 
-          <div class="mb-4 bg-green-100 border border-green-300 rounded-xl p-4 shadow-inner">
+          <div class="mb-4 bg-green-100 border border-green-300 rounded-lg p-4 shadow-inner">
             <p class="text-center font-bold text-green-700 mb-2">${t.remaining}:</p>
             <div class="flex justify-around text-center text-green-800">
               <div><p class="font-bold">${t.vori}</p><p class="text-3xl font-extrabold text-center">${remVori}</p></div>
