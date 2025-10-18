@@ -55,6 +55,17 @@
       text-align: center;
       font-weight: bold;
     }
+
+    #priceTable div button {
+      background-color: #fbbf24;
+      padding: 6px 12px;
+      border-radius: 8px;
+      font-weight: 600;
+      color: #1e293b;
+      border: none;
+      cursor: pointer;
+
+    }
   </style>
 </head>
 
@@ -118,7 +129,7 @@
       <!-- Result -->
       <div id="result" class="my-8 hidden animate-fadeIn"></div>
     </section>
-
+    <div id="priceTable" class="text-amber-800"></div>
     <section>
       <div
         class="w-full max-w-2xl bg-white/70 backdrop-blur-md rounded-3xl shadow-2xl border border-yellow-200 p-6 transition-all hover:shadow-amber-200">
@@ -225,6 +236,7 @@
     <!-- BD Gold Price History -->
     <section
       class="w-full max-w-6xl bg-white/80 backdrop-blur-md rounded-3xl border border-yellow-200 shadow-xl p-6 text-left">
+
       <h3 class="text-lg font-semibold text-amber-800 mb-3 flex gap-2"><img src="./images/bangladesh.png" alt="BD"
           class="w-6 h-6"> Bangladesh Gold Price 🇧🇩</h3>
       <div id="priceTable" class="text-amber-900"></div>
@@ -234,6 +246,7 @@
           class="text-amber-700 font-semibold hover:underline">GoldR.org</a>
       </p>
     </section>
+
 
     <!-- International Price Chart -->
     <section class="w-full max-w-6xl bg-white/80 backdrop-blur-md rounded-3xl border border-yellow-200 shadow-xl p-6">
@@ -317,6 +330,7 @@
   </footer>
 
   <script src="./script.js"></script>
+  <script src="https://www.goldr.org/price.js?gttm"></script>
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
   <script
     src="https://cdn.jsdelivr.net/npm/chartjs-plugin-crosshair@2.0.0/dist/chartjs-plugin-crosshair.min.js"></script>
