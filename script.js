@@ -101,7 +101,7 @@ function calculatePrice() {
   const rotiPrice = (roti / 96) * pricePerVori;
   const pointPrice = (point / 960) * pricePerVori;
 
-  const priceTable = document.getElementById("priceTable");
+  const priceTable = document.getElementById("calculatedPriceTable");
   priceTable.innerHTML = `<tr class="bg-yellow-50 text-yellow-800 font-medium">
                                         <td class="border border-yellow-200 p-2">🪙 Vori</td>
                                         <td class="border border-yellow-200 p-2">${vori}</td>
@@ -129,7 +129,7 @@ function calculatePrice() {
                                         <td class="border border-yellow-200 p-2">${formatBDT(
                                           pointPrice
                                         )}</td>
-                                    </tr>`;
+                          </tr>`;
 
   const t = textMap[currentLang];
   document.getElementById("wagesText").innerText = `${t.wagesText}${formatBDT(
