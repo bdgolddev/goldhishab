@@ -9,12 +9,17 @@
   <meta name="keywords"
     content="Khaad iSona, Khaad Hisab, GoldCalculator, Khaad Calculator, KhaitCalculator, KaratToKhaitCalculator, KaratToKhaad Calculator, GoldKaratToKhaitCalculator, GoldKaratToKhaad Calculator, VoriAnaRotiPoint">
   <meta name="author" content="Anik K. Datta">
-  <title>Gold Khaad Calculator</title>
+  <title>Gold Hishab</title>
   <link rel="icon" type="image/x-icon" href="./images/favicon.ico">
   <!-- AOS Animate On Scroll -->
   <link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet">
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
+    input:disabled {
+      cursor: not-allowed;
+      background-color: #f5f5f5;
+    }
+
     @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap');
 
     html {
@@ -72,39 +77,142 @@
       cursor: pointer;
 
     }
+    
+
+    @keyframes glow {
+      0% {
+        box-shadow: 0 0 5px #f59f0b7f, 0 0 10px #f59f0b94;
+      }
+
+      50% {
+        box-shadow: 0 0 20px #f59f0b97, 0 0 30px #f59e0b;
+      }
+
+      100% {
+        box-shadow: 0 0 5px #f59f0b8c, 0 0 10px #f59e0b;
+      }
+    }
+
+    .glow-button {
+      animation: glow 2s infinite;
+    }
   </style>
 </head>
 
 <body class="min-h-screen flex flex-col bg-gradient-to-br from-yellow-50 to-amber-100">
 
+  <!-- Scroll to Top Button -->
+  <button id="scrollToTopBtn"
+    class="fixed bottom-6 right-6 bg-gradient-to-r from-amber-500 to-yellow-400 text-white font-bold p-4 rounded-full shadow-lg border-2 border-white backdrop-blur-md hover:scale-110 hover:shadow-amber-400 transition-all duration-300 ease-in-out cursor-pointer group">
+
+    <!-- Up Arrow Icon -->
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"
+      class="w-6 h-6 group-hover:-translate-y-1 transition-transform duration-300">
+      <path stroke-linecap="round" stroke-linejoin="round" d="M5 15l7-7 7 7" />
+    </svg>
+
+    <!-- Glow Effect -->
+    <span
+      class="absolute inset-0 bg-gradient-to-t from-yellow-500/30 to-transparent rounded-full blur-lg opacity-0 group-hover:opacity-100 transition duration-500"></span>
+  </button>
+
   <!-- Header -->
-  <header
-    class="relative py-2 bg-gradient-to-r from-amber-100 via-yellow-50 to-amber-100 shadow-lg backdrop-blur-sm border-b border-amber-200">
-    <div class="container mx-auto flex flex-col md:flex-row items-center justify-center gap-4 px-4">
-      <img src="./images/favicon.png" alt="Khaad Hishab Logo"
-        class="w-14 h-14 md:w-16 md:h-16 lg:w-20 lg:h-20 drop-shadow-md" />
-      <div class="text-center md:text-left">
-        <h1
-          class="text-3xl md:text-4xl font-extrabold bg-clip-text text-transparent bg-gradient-to-r from-amber-600 to-yellow-700">
-          <span class="text-amber-700">Gold Hishab<small class="text-sm">🇧🇩</small> </span>
-        </h1>
-        <p class="text-sm md:text-base text-amber-800 font-medium mt-2">
-          স্মার্ট গোল্ড ক্যারেট গণক | Smart Gold Karat Calculator
-        </p>
-      </div>
+  <header id="nav-bar"
+    class="fixed top-0 left-0 right-0 z-50 bg-gradient-to-r from-amber-100 via-yellow-50 to-amber-100 backdrop-blur-md transition-all duration-300">
+    <div class="container mx-auto px-4 py-3 flex items-center justify-between">
+
+      <!-- Logo + Title -->
+      <a href="/" class="flex items-center space-x-3">
+        <img src="./images/favicon.png" alt="Logo" class="w-12 h-12 md:w-14 md:h-14 drop-shadow-md" />
+        <div>
+          <span
+            class="text-xl md:text-2xl lg:3xl font-extrabold bg-clip-text text-center text-transparent bg-gradient-to-r from-amber-700 to-yellow-700 flex items-center gap-1">
+            Gold Hishab<small class="text-sm text-amber-700"> BD</small>
+            <span
+              class=" px-4 text-[11px] font-semibold text-amber-900 bg-gradient-to-r from-amber-300 to-yellow-200 rounded-full shadow animate-pulse ml-1">
+              🔸 v5.0
+            </span>
+          </span>
+          <p class="text-xs md:text-sm text-amber-800 font-medium">
+            স্মার্ট গোল্ড ক্যারেট গণক | Smart Gold Karat Calculator
+          </p>
+        </div>
+      </a>
+
+      <!-- Nav Menu (Desktop) -->
+      <nav class="hidden lg:flex space-x-6 text-amber-900 font-semibold relative items-center">
+        <a href="#" class="py-1 hover:text-amber-600 transition">Home</a>
+        <a href="#khaadCalculation" class="py-1 hover:text-amber-600 transition">Khaad Calculator</a>
+        <a href="#priceCalculation" class="py-1 hover:text-amber-600 transition">Price Calculator</a>
+
+        <!-- Dropdown: Live Price -->
+        <div class="group relative">
+          <button class="py-1 hover:text-amber-600 flex items-center gap-1 transition">
+            Live Price
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24"
+              stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+            </svg>
+          </button>
+          <!-- Dropdown Menu -->
+          <div
+            class="absolute hidden group-hover:flex flex-col bg-gradient-to-b from-amber-50 to-yellow-100 shadow-md border border-amber-200 rounded-lg top-8 left-0 w-48 animate-fadeIn">
+            <a href="#priceTable" class="px-4 py-2 hover:bg-amber-200 rounded-t-md transition">BAJUS Market</a>
+            <a href="#bdMarket" class="px-4 py-2 hover:bg-amber-200 rounded-t-md transition">BD Market</a>
+            <a href="#globalMarket" class="px-4 py-2 hover:bg-amber-200 transition">International</a>
+          </div>
+        </div>
+
+        <a href="#buyMeACofee"
+          class="glow-button inline-block px-6 py-2 font-semibold text-white bg-amber-500 rounded-full hover:bg-amber-600 transition duration-300">
+          ☕ Buy Me A Coffee
+        </a>
+      </nav>
+
+      <!-- Mobile Menu Button -->
+      <button id="menu-btn"
+        class="lg:hidden text-amber-800 focus:outline-none focus:ring-2 focus:ring-amber-400 rounded-lg p-2">
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-7 h-7" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+        </svg>
+      </button>
+
     </div>
 
-    <span
-      class="absolute top-3 right-5 px-4 py-1 text-xs md:text-sm font-semibold text-amber-900 bg-gradient-to-r from-amber-300 to-yellow-200 rounded-full shadow animate-pulse">
-      🔸 Version 4.0.6
-    </span>
+    <!-- Mobile Dropdown Menu -->
+    <div id="mobile-menu"
+      class="hidden lg:hidden bg-gradient-to-b from-amber-50 to-yellow-100 border-t border-amber-200">
+      <nav class="flex flex-col items-center py-4 space-y-3 text-amber-900 font-semibold">
+        <a href="#" class="hover:text-amber-600 transition">Home</a>
+        <a href="#khaadCalculation" class="hover:text-amber-600 transition">Khaad Calculator</a>
+        <a href="#priceCalculation" class="hover:text-amber-600 transition">Price Calculator</a>
+
+        <details class="w-full max-w-xs text-center">
+          <summary class="cursor-pointer py-2 hover:text-amber-600 transition">Live Price</summary>
+          <div class="flex flex-col space-y-1 py-1">
+            <a href="#priceTable" class="block hover:bg-amber-200 rounded-md py-1">BAJUS Market</a>
+            <a href="#bdMarket" class="block hover:bg-amber-200 rounded-md py-1">BD Market</a>
+            <a href="#globalMarket" class="block hover:bg-amber-200 rounded-md py-1">International</a>
+          </div>
+        </details>
+
+        <a href="#buyMeACofee"
+          class="glow-button inline-block px-6 py-2 font-semibold text-white bg-amber-500 rounded-full hover:bg-amber-600 transition duration-300">
+          ☕ Buy Me A Coffee
+        </a>
+      </nav>
+    </div>
   </header>
+
+
   <div id="offlineMessage" class="text-center bg-red-500">You are currently offline.</div>
 
   <!-- Main Section -->
   <main class="flex-grow flex flex-col items-center justify-start py-10 px-4 space-y-10">
 
     <!-- Calculator -->
+    <div id="khaadCalculation" class="pt-24 flex flex-col items-center gap-6">
+    </div>
     <section data-aos="fade-up"
       class="w-full max-w-lg bg-white/70 backdrop-blur-md rounded-3xl shadow-2xl border border-yellow-200 p-6 transition-all hover:shadow-amber-200">
       <div class="flex justify-between items-center mb-6">
@@ -143,14 +251,20 @@
       </a>
     </div>
 
-    <div data-aos="fade-up"
-  data-aos-delay="300" id="priceTable" class="text-amber-800"></div>
-    <section>
+    <!-- ================================================= Price Table -->
+    <div id="priceTable" class="pt-24 flex flex-col items-center gap-6">
+    </div>
+    <div data-aos="fade-up" data-aos-delay="300" id="priceTable" class="text-amber-800"></div>
+
+    <!-- =================================================Gold Price Calculator -->
+    <div id="priceCalculation" class="pt-24 flex flex-col items-center gap-6">
+    </div>
+    <section id="price_calculator">
       <div data-aos="fade-up" data-aos-delay="200"
         class="w-full max-w-2xl bg-white/70 backdrop-blur-md rounded-3xl shadow-2xl border border-yellow-200 p-6 transition-all hover:shadow-amber-200">
         <h1 id="priceTitle"
           class="text-2xl font-bold text-center text-amber-700 mb-6 flex items-center justify-center gap-2">
-          💎 Gold Price Calculator
+          Price Calculator
         </h1>
         <div class="relative bg-yellow-100 border-l-4 border-yellow-500 text-yellow-700 p-6 my-4 rounded-md">
           <div class="flex items-center space-x-4">
@@ -165,15 +279,50 @@
 
         <form id="goldForm" class="space-y-4">
           <div>
-            <label id="priceKaratLabel" class="block text-gray-700 font-semibold mb-1">Select Karat</label>
-            <select id="karat"
-              class="w-full border border-amber-300 rounded-lg p-3 bg-white text-gray-700 font-medium focus:ring-2 focus:ring-amber-400 outline-none transition">
-              <option value="">-- Select --</option>
-              <option value="22">22 Karat</option>
-              <option value="21">21 Karat</option>
-              <option value="18">18 Karat</option>
-            </select>
+            <label id="priceKaratLabel" class="block text-gray-700 font-semibold mb-2">Select Purity/Karat</label>
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
+              <!-- 24K -->
+              <label class="cursor-pointer">
+                <input type="radio" id="purity-24" name="purity" value="999" class="hidden peer"
+                  onchange="setPurity('999')">
+                <div
+                  class="px-8 py-2.5 rounded-lg font-medium text-gray-700 bg-amber-100 border border-amber-500 hover:bg-yellow-100 transition-all peer-checked:bg-amber-500 peer-checked:text-white peer-checked:shadow-lg">
+                  24K / 999
+                </div>
+              </label>
+
+              <!-- 22K -->
+              <label class="cursor-pointer">
+                <input type="radio" id="purity-22" name="purity" value="916" class="hidden peer"
+                  onchange="setPurity('916')" checked>
+                <div
+                  class="px-8 py-2.5 rounded-lg font-medium text-gray-700 bg-amber-100 border border-amber-500 hover:bg-yellow-100 transition-all peer-checked:bg-amber-500 peer-checked:text-white peer-checked:shadow-lg">
+                  22K / 916
+                </div>
+              </label>
+
+              <!-- 21K -->
+              <label class="cursor-pointer">
+                <input type="radio" id="purity-21" name="purity" value="875" class="hidden peer"
+                  onchange="setPurity('875')">
+                <div
+                  class="px-8 py-2.5 rounded-lg font-medium text-gray-700 bg-amber-100 border border-amber-500 hover:bg-yellow-100 transition-all peer-checked:bg-amber-500 peer-checked:text-white peer-checked:shadow-lg">
+                  21K / 875
+                </div>
+              </label>
+
+              <!-- 18K -->
+              <label class="cursor-pointer">
+                <input type="radio" id="purity-18" name="purity" value="750" class="hidden peer"
+                  onchange="setPurity('750')">
+                <div
+                  class="px-8 py-2.5 rounded-lg font-medium text-gray-700 bg-amber-100 border border-amber-500 hover:bg-yellow-100 transition-all peer-checked:bg-amber-500 peer-checked:text-white peer-checked:shadow-lg">
+                  18K / 750
+                </div>
+              </label>
+            </div>
           </div>
+
 
           <div>
             <label id="priceLabel" class="block text-gray-700 font-semibold mb-1">Gold Price per Vori (৳)</label>
@@ -181,27 +330,52 @@
               class="w-full border border-amber-300 rounded-lg p-3 bg-white text-gray-700 font-medium focus:ring-2 focus:ring-amber-400 outline-none transition" />
           </div>
 
+          <div>
+            <label class="block text-gray-700 font-semibold mb-1">Enter Weight By:</label>
+            <div class="flex rounded-lg bg-amber-100 p-1 mb-4">
+              <button type="button" id="modeLocalBtn" onclick="setInputMode('local')"
+                class="flex-1 text-center py-2 text-sm font-semibold transition-all duration-200 rounded-lg bg-amber-600 text-white shadow-md">
+                in Vori
+              </button>
+              <button type="button" id="modeGramBtn" onclick="setInputMode('gram')"
+                class="flex-1 text-center py-2 text-sm font-semibold transition-all duration-200 rounded-lg text-gray-700">
+                in Gram
+              </button>
+            </div>
+          </div>
+
           <div class="grid grid-cols-4 gap-2">
             <div>
               <label id="voriLabel" class="block text-sm text-gray-700 font-semibold mb-1">Vori</label>
-              <input type="number" id="vori" value="0"
+              <input type="number" id="vori" value="0" min="0"
+                oninput="setInputMode('local'); handleWeightInput('local')"
                 class="w-full border border-amber-300 rounded-lg p-3 bg-white text-gray-700 font-medium focus:ring-2 focus:ring-amber-400 outline-none transition" />
             </div>
             <div>
               <label id="anaLabel" class="block text-sm text-gray-700 font-semibold mb-1">Ana</label>
-              <input type="number" id="ana" value="0"
+              <input type="number" id="ana" value="0" min="0" max="15"
+                oninput="setInputMode('local'); handleWeightInput('local')"
                 class="w-full border border-amber-300 rounded-lg p-3 bg-white text-gray-700 font-medium focus:ring-2 focus:ring-amber-400 outline-none transition" />
             </div>
             <div>
               <label id="rotiLabel" class="block text-sm text-gray-700 font-semibold mb-1">Roti</label>
-              <input type="number" id="roti" value="0"
+              <input type="number" id="roti" value="0" min="0" max="5"
+                oninput="setInputMode('local'); handleWeightInput('local')"
                 class="w-full border border-amber-300 rounded-lg p-3 bg-white text-gray-700 font-medium focus:ring-2 focus:ring-amber-400 outline-none transition" />
             </div>
             <div>
               <label id="pointLabel" class="block text-sm text-gray-700 font-semibold mb-1">Point</label>
-              <input type="number" id="point" value="0"
+              <input type="number" id="point" value="0" min="0" max="9"
+                oninput="setInputMode('local'); handleWeightInput('local')"
                 class="w-full border border-amber-300 rounded-lg p-3 bg-white text-gray-700 font-medium focus:ring-2 focus:ring-amber-400 outline-none transition" />
             </div>
+          </div>
+
+          <div class="mt-4">
+            <label class="block text-gray-700 font-semibold mb-1">Total Weight in Grams (g)</label>
+            <input type="number" id="gramsInput" value="0.0000" min="0" step="0.0001" disabled
+              oninput="setInputMode('gram'); handleWeightInput('gram')"
+              class="w-full border border-amber-300 rounded-lg p-3 bg-white text-gray-700 font-medium focus:ring-2 focus:ring-amber-400 outline-none transition text-lg font-bold" />
           </div>
 
           <div class="grid grid-cols-2 gap-2">
@@ -249,7 +423,9 @@
     </section>
 
     <!-- BD Gold Price History -->
-    <section data-aos="flip-left" data-aos-delay="300"
+    <div id="bdMarket" class="pt-24 flex flex-col items-center gap-6">
+    </div>
+    <section data-aos="fade-left" data-aos-delay="300"
       class="w-full max-w-6xl bg-white/80 backdrop-blur-md rounded-3xl border border-yellow-200 shadow-xl p-6 text-left">
 
       <h3 class="text-lg font-semibold text-amber-800 mb-3 flex gap-2"><img src="./images/bangladesh.png" alt="BD"
@@ -262,9 +438,10 @@
       </p>
     </section>
 
-
     <!-- International Price Chart -->
-    <section data-aos="flip-right" data-aos-delay="300"
+    <div id="globalMarket" class="pt-24 flex flex-col items-center gap-6">
+    </div>
+    <section data-aos="fade-right" data-aos-delay="300"
       class="w-full max-w-6xl bg-white/80 backdrop-blur-md rounded-3xl border border-yellow-200 shadow-xl p-6">
       <h3 class="text-lg font-semibold text-amber-800 mb-3">🌍 International Gold Price</h3>
       <iframe src="https://goldbroker.com/widget/live/XAU?currency=USD&height=320" scrolling="no" frameborder="0"
@@ -274,9 +451,70 @@
           class="text-amber-700 font-semibold hover:underline">GoldBroker.com</a>
       </p>
     </section>
+    <!-- About Gold Hishab Section -->
+    <section
+      class="relative bg-gradient-to-br from-amber-50 via-yellow-50 to-amber-100 py-20 px-6 md:px-12 overflow-hidden">
+      <div class="absolute inset-0 opacity-10 bg-[url('https://www.transparenttextures.com/patterns/gold-scale.png')]">
+      </div>
 
+      <div class="max-w-5xl mx-auto text-center relative z-10">
+        <!-- Title -->
+        <h2 class="text-4xl font-extrabold text-amber-700 mb-4 flex items-center justify-center gap-2">
+          🧮 About <span class="text-yellow-600">Gold Hishab</span>
+        </h2>
+        <p class="text-lg text-gray-700 max-w-3xl mx-auto mb-10 leading-relaxed">
+          <span class="font-semibold text-amber-700">Gold Hishab</span> is a modern web-based calculator designed for
+          jewelers, gold traders, and smart buyers in Bangladesh. It simplifies gold purity conversion, karat-to-khaad
+          calculations, and real-time price estimation — all in one elegant, user-friendly platform.
+        </p>
+
+        <!-- Feature Cards -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-left">
+          <!-- Feature 1 -->
+          <div
+            class="bg-white/90 backdrop-blur-md shadow-lg hover:shadow-amber-300 rounded-2xl p-6 border border-yellow-100 transition-all hover:-translate-y-1">
+            <div class="text-4xl mb-3">💎</div>
+            <h3 class="text-xl font-semibold text-amber-700 mb-2">Karat to Khaad Conversion</h3>
+            <p class="text-gray-600">
+              Instantly convert gold karat values to khaad with precise mathematical accuracy and easy-to-read results.
+            </p>
+          </div>
+
+          <!-- Feature 2 -->
+          <div
+            class="bg-white/90 backdrop-blur-md shadow-lg hover:shadow-amber-300 rounded-2xl p-6 border border-yellow-100 transition-all hover:-translate-y-1">
+            <div class="text-4xl mb-3">📊</div>
+            <h3 class="text-xl font-semibold text-amber-700 mb-2">Smart Price Calculator</h3>
+            <p class="text-gray-600">
+              Estimate the total price of gold by carat, weight, and live market rate — including optional wages and
+              VAT.
+            </p>
+          </div>
+
+          <!-- Feature 3 -->
+          <div
+            class="bg-white/90 backdrop-blur-md shadow-lg hover:shadow-amber-300 rounded-2xl p-6 border border-yellow-100 transition-all hover:-translate-y-1">
+            <div class="text-4xl mb-3">🌍</div>
+            <h3 class="text-xl font-semibold text-amber-700 mb-2">Live Global & BD Rates</h3>
+            <p class="text-gray-600">
+              View real-time gold prices from international sources and compare them with Bangladesh’s daily rates.
+            </p>
+          </div>
+        </div>
+
+        <!-- CTA Button -->
+        <div class="mt-10">
+          <a href="https://goldhishab.vercel.app/" target="_blank"
+            class="inline-block bg-gradient-to-r from-yellow-600 to-amber-600 text-white text-lg font-semibold px-8 py-3 rounded-full shadow-lg hover:shadow-amber-400 hover:scale-105 transition-transform duration-300">
+            🚀 Try Gold Hishab Now
+          </a>
+        </div>
+      </div>
+    </section>
 
     <!-- Rating & Support Section -->
+    <div id="buyMeACofee" class="pt-24 flex flex-col items-center gap-6">
+    </div>
     <section data-aos="fade-up" data-aos-delay="400"
       class="w-full max-w-lg bg-white/80 backdrop-blur-md rounded-3xl border border-yellow-200 shadow-xl p-6 text-center my-10 transition-all hover:shadow-amber-200">
       <h3 id="rateTitle" class="text-xl font-bold text-amber-800 mb-4">⭐ Rate & Support</h3>
