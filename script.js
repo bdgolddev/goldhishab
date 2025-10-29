@@ -1,31 +1,30 @@
 // Gold Price calculator.....
 const menuBtn = document.getElementById("menu-btn");
-    const mobileMenu = document.getElementById("mobile-menu");
+const mobileMenu = document.getElementById("mobile-menu");
 
-    menuBtn.addEventListener("click", () => {
-      mobileMenu.classList.toggle("hidden");
-      mobileMenu.classList.toggle("animate-fadeIn");
-    });
-    
-    const scrollBtn = document.getElementById("scrollToTopBtn");
-    const navBar = document.getElementById("nav-bar");
+menuBtn.addEventListener("click", () => {
+  mobileMenu.classList.toggle("hidden");
+  mobileMenu.classList.toggle("animate-fadeIn");
+});
 
-  // Show button when scrolled down
-  window.addEventListener("scroll", () => {
-    if (window.scrollY > 200) {
-      navBar.classList.add("shadow-lg", "border-b", "border-amber-200");
-      scrollBtn.classList.remove("opacity-0", "pointer-events-none");
-    } else {
-      navBar.classList.remove("shadow-lg", "border-b", "border-amber-200");
-      scrollBtn.classList.add("opacity-0", "pointer-events-none");
-    }
-  });
+const scrollBtn = document.getElementById("scrollToTopBtn");
+const navBar = document.getElementById("nav-bar");
 
-  // Scroll to top on click
-  scrollBtn.addEventListener("click", () => {
-    window.scrollTo({ top: 0, behavior: "smooth" });
-  });
+// Show button when scrolled down
+window.addEventListener("scroll", () => {
+  if (window.scrollY > 200) {
+    navBar.classList.add("shadow-lg", "border-b", "border-amber-200");
+    scrollBtn.classList.remove("opacity-0", "pointer-events-none");
+  } else {
+    navBar.classList.remove("shadow-lg", "border-b", "border-amber-200");
+    scrollBtn.classList.add("opacity-0", "pointer-events-none");
+  }
+});
 
+// Scroll to top on click
+scrollBtn.addEventListener("click", () => {
+  window.scrollTo({ top: 0, behavior: "smooth" });
+});
 
 const textMap = {
   en: {
@@ -112,31 +111,31 @@ const ROTI_PER_VORI = ANA_PER_VORI * ROTI_PER_ANA; // 96
 const POINT_PER_VORI = ROTI_PER_VORI * POINT_PER_ROTI; // 960
 
 const PURITY_FACTORS = {
-  '24K / 999': 1.000,
-  '22K / 916': 916 / 999, // ~0.917
-  '21K / 875': 875 / 999, // ~0.876
-  '18K / 750': 750 / 999, // ~0.751
+  "24K / 999": 1.0,
+  "22K / 916": 916 / 999, // ~0.917
+  "21K / 875": 875 / 999, // ~0.876
+  "18K / 750": 750 / 999, // ~0.751
 };
 
 // --- Conversion Utilities ---
 
 // Converts Local Units (Vori, Ana, Roti, Point) to Grams and total Vori
 function localUnitsToGrams(vori, ana, roti, point) {
-  const totalVori = 
-    (Number(vori) || 0) + 
-    (Number(ana) / ANA_PER_VORI) + 
-    (Number(roti) / ROTI_PER_VORI) + 
-    (Number(point) / POINT_PER_VORI);
+  const totalVori =
+    (Number(vori) || 0) +
+    Number(ana) / ANA_PER_VORI +
+    Number(roti) / ROTI_PER_VORI +
+    Number(point) / POINT_PER_VORI;
 
   const totalGrams = totalVori * GRAMS_PER_VORI;
-  
+
   return { totalGrams, totalVori };
 }
 
 // Converts Grams to Local Units (Vori, Ana, Roti, Point)
 function gramsToLocalUnits(totalGrams) {
   let totalVori = (Number(totalGrams) || 0) / GRAMS_PER_VORI;
-  
+
   let vori = Math.floor(totalVori);
   let remainder = totalVori - vori;
 
@@ -164,132 +163,151 @@ function gramsToLocalUnits(totalGrams) {
     vori += 1;
     ana = 0;
   }
-  
+
   return { vori, ana, roti, point };
 }
 
 // --- State Management for Price Calculator ---
-let currentInputMode = 'local'; // 'local' or 'gram'
+let currentInputMode = "local"; // 'local' or 'gram'
 
 function setInputMode(mode) {
-    currentInputMode = mode;
-    // Visually update the tabs
-    document.getElementById('modeLocalBtn').classList.toggle('bg-amber-600', mode === 'local');
-    document.getElementById('modeLocalBtn').classList.toggle('text-white', mode === 'local');
-    document.getElementById('modeLocalBtn').classList.toggle('bg-amber-200', mode !== 'local');
-    document.getElementById('modeLocalBtn').classList.toggle('text-gray-700', mode !== 'local');
+  currentInputMode = mode;
+  // Visually update the tabs
+  document
+    .getElementById("modeLocalBtn")
+    .classList.toggle("bg-amber-600", mode === "local");
+  document
+    .getElementById("modeLocalBtn")
+    .classList.toggle("text-white", mode === "local");
+  document
+    .getElementById("modeLocalBtn")
+    .classList.toggle("bg-amber-200", mode !== "local");
+  document
+    .getElementById("modeLocalBtn")
+    .classList.toggle("text-gray-700", mode !== "local");
 
-    document.getElementById('modeGramBtn').classList.toggle('bg-amber-600', mode === 'gram');
-    document.getElementById('modeGramBtn').classList.toggle('text-white', mode === 'gram');
-    document.getElementById('modeGramBtn').classList.toggle('bg-amber-200', mode !== 'gram');
-    document.getElementById('modeGramBtn').classList.toggle('text-gray-700', mode !== 'gram');
+  document
+    .getElementById("modeGramBtn")
+    .classList.toggle("bg-amber-600", mode === "gram");
+  document
+    .getElementById("modeGramBtn")
+    .classList.toggle("text-white", mode === "gram");
+  document
+    .getElementById("modeGramBtn")
+    .classList.toggle("bg-amber-200", mode !== "gram");
+  document
+    .getElementById("modeGramBtn")
+    .classList.toggle("text-gray-700", mode !== "gram");
 
-    // Update input disabled states
-    const isLocalDisabled = mode !== 'local';
-    document.getElementById('vori').disabled = isLocalDisabled;
-    document.getElementById('ana').disabled = isLocalDisabled;
-    document.getElementById('roti').disabled = isLocalDisabled;
-    document.getElementById('point').disabled = isLocalDisabled;
-    document.getElementById('gramsInput').disabled = mode !== 'gram';
+  // Update input disabled states
+  const isLocalDisabled = mode !== "local";
+  document.getElementById("vori").disabled = isLocalDisabled;
+  document.getElementById("ana").disabled = isLocalDisabled;
+  document.getElementById("roti").disabled = isLocalDisabled;
+  document.getElementById("point").disabled = isLocalDisabled;
+  document.getElementById("gramsInput").disabled = mode !== "gram";
 
-    // Rerun calculation to update totals if inputs were changed
-    calculatePrice();
+  // Rerun calculation to update totals if inputs were changed
+  calculatePrice();
 }
 
 function handleWeightInput(source) {
-    if (source === 'gram') {
-        const grams = parseFloat(document.getElementById('gramsInput').value) || 0;
-        const { vori, ana, roti, point } = gramsToLocalUnits(grams);
-        
-        // Update local unit display fields (not input fields if they are meant to be 'local' inputs)
-        // Since we are using the same inputs, we'll just update their values.
-        document.getElementById('vori').value = vori;
-        document.getElementById('ana').value = ana;
-        document.getElementById('roti').value = roti;
-        document.getElementById('point').value = point;
-        
-    } else {
-        // Source is a local unit, so update the Grams field
-        const vori = parseFloat(document.getElementById('vori').value) || 0;
-        const ana = parseFloat(document.getElementById('ana').value) || 0;
-        const roti = parseFloat(document.getElementById('roti').value) || 0;
-        const point = parseFloat(document.getElementById('point').value) || 0;
-        const { totalGrams } = localUnitsToGrams(vori, ana, roti, point);
-        
-        document.getElementById('gramsInput').value = totalGrams.toFixed(4);
-    }
-    
-    calculatePrice();
+  if (source === "gram") {
+    const grams = parseFloat(document.getElementById("gramsInput").value) || 0;
+    const { vori, ana, roti, point } = gramsToLocalUnits(grams);
+
+    // Update local unit display fields (not input fields if they are meant to be 'local' inputs)
+    // Since we are using the same inputs, we'll just update their values.
+    document.getElementById("vori").value = vori;
+    document.getElementById("ana").value = ana;
+    document.getElementById("roti").value = roti;
+    document.getElementById("point").value = point;
+  } else {
+    // Source is a local unit, so update the Grams field
+    const vori = parseFloat(document.getElementById("vori").value) || 0;
+    const ana = parseFloat(document.getElementById("ana").value) || 0;
+    const roti = parseFloat(document.getElementById("roti").value) || 0;
+    const point = parseFloat(document.getElementById("point").value) || 0;
+    const { totalGrams } = localUnitsToGrams(vori, ana, roti, point);
+
+    document.getElementById("gramsInput").value = totalGrams.toFixed(4);
+  }
+
+  calculatePrice();
 }
 
 // Global variable to store the selected purity/karat key
-let selectedPurity = '22K / 916'; // Default
+let selectedPurity = "22K / 916"; // Default
 
 function setPurity(purityKey) {
-    selectedPurity = purityKey;
-    // Update the visual selection of the radio buttons
-    document.querySelectorAll('.purity-radio').forEach(input => {
-        input.checked = input.value === purityKey;
-    });
-    // Rerun calculation
-    calculatePrice();
+  selectedPurity = purityKey;
+  // Update the visual selection of the radio buttons
+  document.querySelectorAll(".purity-radio").forEach((input) => {
+    input.checked = input.value === purityKey;
+  });
+  // Rerun calculation
+  calculatePrice();
 }
 
 // Replace the existing calculatePrice function
 function calculatePrice() {
-    // 1. Determine the total weight in Vori
-    let totalVori = 0;
-    let totalGrams = 0;
-    
-    if (currentInputMode === 'gram') {
-        totalGrams = parseFloat(document.getElementById("gramsInput").value) || 0;
-        totalVori = totalGrams / GRAMS_PER_VORI;
-        // The local unit fields are already updated by handleWeightInput('gram')
-    } else {
-        const vori = parseFloat(document.getElementById("vori").value) || 0;
-        const ana = parseFloat(document.getElementById("ana").value) || 0;
-        const roti = parseFloat(document.getElementById("roti").value) || 0;
-        const point = parseFloat(document.getElementById("point").value) || 0;
-        
-        const result = localUnitsToGrams(vori, ana, roti, point);
-        totalVori = result.totalVori;
-        totalGrams = result.totalGrams;
-        // The gram field is already updated by handleWeightInput('local')
-    }
-    
-    const pricePerVori =
-        parseFloat(document.getElementById("pricePerVori").value) || 0;
-    const wagesPerVori =
-        parseFloat(document.getElementById("wagesPerVori").value) || 0;
-    const vatPercent = parseFloat(document.getElementById("vat").value) || 0;
+  // 1. Determine the total weight in Vori
+  let totalVori = 0;
+  let totalGrams = 0;
 
-    // 2. Apply Purity Adjustment
-    const purityFactor = PURITY_FACTORS[selectedPurity] || 1.0;
-    const adjustedPricePerVori = pricePerVori * purityFactor;
+  if (currentInputMode === "gram") {
+    totalGrams = parseFloat(document.getElementById("gramsInput").value) || 0;
+    totalVori = totalGrams / GRAMS_PER_VORI;
+    // The local unit fields are already updated by handleWeightInput('gram')
+  } else {
+    const vori = parseFloat(document.getElementById("vori").value) || 0;
+    const ana = parseFloat(document.getElementById("ana").value) || 0;
+    const roti = parseFloat(document.getElementById("roti").value) || 0;
+    const point = parseFloat(document.getElementById("point").value) || 0;
 
-    // 3. Calculation
-    const goldPrice = totalVori * adjustedPricePerVori;
-    const wages = totalVori * wagesPerVori;
-    const subtotal = goldPrice + wages;
-    const vat = subtotal * (vatPercent / 100);
-    const total = subtotal + vat;
-    
-    // 4. Breakdown for the table (using totalVori and the adjusted price)
-    const voriQty = totalVori; // Use the total for the table calculation
-    const anaQty = (totalVori % 1) * ANA_PER_VORI; // For unit breakdown display (not used in actual calc)
-    const rotiQty = (totalVori % 1) * ROTI_PER_VORI;
-    const pointQty = (totalVori % 1) * POINT_PER_VORI;
+    const result = localUnitsToGrams(vori, ana, roti, point);
+    totalVori = result.totalVori;
+    totalGrams = result.totalGrams;
+    // The gram field is already updated by handleWeightInput('local')
+  }
 
-    // Price of the actual gold weight (since we use totalVori for all calculations)
-    const goldPriceDisplay = totalVori * adjustedPricePerVori;
+  const pricePerVori =
+    parseFloat(document.getElementById("pricePerVori").value) || 0;
+  const wagesPerVori =
+    parseFloat(document.getElementById("wagesPerVori").value) || 0;
+  const vatPercent = parseFloat(document.getElementById("vat").value) || 0;
 
-    // 5. Update Table and Summary
-    const priceTable = document.getElementById("calculatedPriceTable");
-    // Get local unit breakdown for display purposes only
-    const { vori: dVori, ana: dAna, roti: dRoti, point: dPoint } = gramsToLocalUnits(totalGrams);
+  // 2. Apply Purity Adjustment
+  const purityFactor = PURITY_FACTORS[selectedPurity] || 1.0;
+  const adjustedPricePerVori = pricePerVori * purityFactor;
 
+  // 3. Calculation
+  const goldPrice = totalVori * adjustedPricePerVori;
+  const wages = totalVori * wagesPerVori;
+  const subtotal = goldPrice + wages;
+  const vat = subtotal * (vatPercent / 100);
+  const total = subtotal + vat;
 
-    priceTable.innerHTML = `<tr class="bg-yellow-50 text-yellow-800 font-medium">
+  // 4. Breakdown for the table (using totalVori and the adjusted price)
+  const voriQty = totalVori; // Use the total for the table calculation
+  const anaQty = (totalVori % 1) * ANA_PER_VORI; // For unit breakdown display (not used in actual calc)
+  const rotiQty = (totalVori % 1) * ROTI_PER_VORI;
+  const pointQty = (totalVori % 1) * POINT_PER_VORI;
+
+  // Price of the actual gold weight (since we use totalVori for all calculations)
+  const goldPriceDisplay = totalVori * adjustedPricePerVori;
+
+  // 5. Update Table and Summary
+  const priceTable = document.getElementById("calculatedPriceTable");
+  // Get local unit breakdown for display purposes only
+  const {
+    vori: dVori,
+    ana: dAna,
+    roti: dRoti,
+    point: dPoint,
+  } = gramsToLocalUnits(totalGrams);
+
+  priceTable.innerHTML = `<tr class="bg-yellow-50 text-yellow-800 font-medium">
                                         <td class="border border-yellow-200 p-2">🪙 Vori</td>
                                         <td class="border border-yellow-200 p-2">${dVori}</td>
                                         <td class="border border-yellow-200 p-2">${formatBDT(
@@ -300,21 +318,24 @@ function calculatePrice() {
                                         <td class="border border-yellow-200 p-2">⚖️ Ana</td>
                                         <td class="border border-yellow-200 p-2">${dAna}</td>
                                         <td class="border border-yellow-200 p-2">${formatBDT(
-                                          (dAna / ANA_PER_VORI / totalVori) * goldPriceDisplay
+                                          (dAna / ANA_PER_VORI / totalVori) *
+                                            goldPriceDisplay
                                         )}</td>
                                     </tr>
                                     <tr class="bg-yellow-50 text-yellow-800 font-medium">
                                         <td class="border border-yellow-200 p-2">🍞 Roti</td>
                                         <td class="border border-yellow-200 p-2">${dRoti}</td>
                                         <td class="border border-yellow-200 p-2">${formatBDT(
-                                          (dRoti / ROTI_PER_VORI) * goldPriceDisplay
+                                          (dRoti / ROTI_PER_VORI) *
+                                            goldPriceDisplay
                                         )}</td>
                                     </tr>
                                     <tr class="bg-yellow-50 text-yellow-800 font-medium">
                                         <td class="border border-yellow-200 p-2">🔸 Point</td>
                                         <td class="border border-yellow-200 p-2">${dPoint}</td>
                                         <td class="border border-yellow-200 p-2">${formatBDT(
-                                          (dPoint / POINT_PER_VORI) * goldPriceDisplay
+                                          (dPoint / POINT_PER_VORI) *
+                                            goldPriceDisplay
                                         )}</td>
                           </tr>
                           <tr class="bg-yellow-100 text-yellow-900 font-bold">
@@ -325,23 +346,25 @@ function calculatePrice() {
                                         )}</td>
                           </tr>`;
 
-    const t = textMap[currentLang];
-    
-    document.getElementById("wagesText").innerText = `${t.wagesText}${formatBDT(
-      wages
-    )}`;
-    document.getElementById("vatText").innerText = `${t.vatText}${formatBDT(
-      vat
-    )}`;
-    document.getElementById("totalText").innerHTML = `
+  const t = textMap[currentLang];
+
+  document.getElementById("wagesText").innerText = `${t.wagesText}${formatBDT(
+    wages
+  )}`;
+  document.getElementById("vatText").innerText = `${t.vatText}${formatBDT(
+    vat
+  )}`;
+  document.getElementById("totalText").innerHTML = `
         ${t.totalText}${formatBDT(total)}
         <br/>
         <small class="text-sm font-normal text-gray-500">
-            (Purity: ${(purityFactor * 100).toFixed(2)}% | Total Grams: ${totalGrams.toFixed(4)})
+            (Purity: ${(purityFactor * 100).toFixed(
+              2
+            )}% | Total Grams: ${totalGrams.toFixed(4)})
         </small>
     `;
 
-    document.getElementById("priceResult").classList.remove("hidden");
+  document.getElementById("priceResult").classList.remove("hidden");
 }
 
 // --- Rating System ---
@@ -640,6 +663,12 @@ function calculateKhaad() {
             <span class="text-2xl font-medium">${t.karatText} :</span>
             <span class="text-2xl font-semibold">${karat.toFixed(2)}K</span>
           </p>
+          
+          <p class="text-center text-gray-700 text-lg mb-3 bg-blue-100 border border-blue-300 text-blue-800 rounded-lg p-2 text-lg">
+            ${t.purity}: <span class="font-semibold">${purityPercent.toFixed(
+    2
+  )}%</span>
+          </p>
 
           
 
@@ -650,16 +679,16 @@ function calculateKhaad() {
             <div class="flex justify-around text-center text-amber-800">
               <div><p class="font-bold">${
                 t.vori
-              }</p><p class="text-3xl font-extrabold text-center">${vori}</p></div>
+              }</p><p class="text-3xl font-bold text-center">${vori}</p></div>
               <div><p class="font-bold">${
                 t.ana
-              }</p><p class="text-3xl font-extrabold text-center">${ana}</p></div>
+              }</p><p class="text-3xl font-bold text-center">${ana}</p></div>
               <div><p class="font-bold">${
                 t.roti
-              }</p><p class="text-3xl font-extrabold text-center">${roti}</p></div>
+              }</p><p class="text-3xl font-bold text-center">${roti}</p></div>
               <div><p class="font-bold">${
                 t.point
-              }</p><p class="text-3xl font-extrabold text-center">${point}</p></div>
+              }</p><p class="text-3xl font-bold text-center">${point}</p></div>
             </div>
           </div>
 
@@ -670,22 +699,19 @@ function calculateKhaad() {
             <div class="flex justify-around text-center text-green-800">
               <div><p class="font-bold">${
                 t.vori
-              }</p><p class="text-3xl font-extrabold text-center">${remVori}</p></div>
+              }</p><p class="text-3xl font-bold text-center">${remVori}</p></div>
               <div><p class="font-bold">${
                 t.ana
-              }</p><p class="text-3xl font-extrabold text-center">${remAna}</p></div>
+              }</p><p class="text-3xl font-bold text-center">${remAna}</p></div>
               <div><p class="font-bold">${
                 t.roti
-              }</p><p class="text-3xl font-extrabold text-center">${remRoti}</p></div>
+              }</p><p class="text-3xl font-bold text-center">${remRoti}</p></div>
               <div><p class="font-bold">${
                 t.point
-              }</p><p class="text-3xl font-extrabold text-center">${remPoint}</p></div>
+              }</p><p class="text-3xl font-bold text-center">${remPoint}</p></div>
             </div>
           </div>
-          <p class="text-center text-gray-700 text-lg mb-3">
-            ${t.purity}: <span class="font-semibold">${purityPercent.toFixed(
-    2
-  )}%</span><br/>
+          <p class="text-center text-gray-700 text-lg mb-0 bg-green-50 border border-green-200 text-green-800 rounded-lg p-2">
             ${t.pureGoldText}: <span class="font-semibold">${pureGram.toFixed(
     4
   )} g</span><br/>
